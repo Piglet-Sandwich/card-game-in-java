@@ -5,12 +5,7 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Deck deck = new Deck();
-        deck.build();
-        deck.shuffle();
-        deck.print();
-
-       // intro();
+        intro();
     }
 
     public static void intro() {
@@ -63,7 +58,7 @@ public class Main {
         //Game loop
         boolean running = true;
         while (running) {
-            System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             // flip cards till there are four
             while (flipped.size() < 4 || deck.deck.isEmpty()) {
                 flipped.add(deck.draw());
@@ -74,20 +69,24 @@ public class Main {
             }
             System.out.println("=========="+player.name + "'s stats==========");
             System.out.println("-Health: " + player.health);
-            System.out.println("-Weapon Stack:" + player.weapon_stack);
+            System.out.println("-Weapon Stack: " + player.weapon_stack);
 
             // print them
             System.out.println("==========ROOM==========");
             for (Card card : flipped) {
                 System.out.print("| " + (flipped.indexOf(card)+1) + ". " + card.get() + " |");
             }
+            System.out.println();
             // display option menu
             System.out.println("==========Choose a Card=========");
             // let player choose
             Card card = flipped.get(sc.nextInt()-1);
             //do the effect
             if (card.suit.equals("Spades") || card.suit.equals("Clubs")) {
-                player.fight(card);
+                if (!player.fight(card)) {
+                    System.out.println("You Died. There were " + deck.deck.size() + " cards left");
+                    running = false;
+                }
             }
             else if (card.suit.equals("Hearts")) {
                 player.take_pot(card.value);
@@ -95,7 +94,6 @@ public class Main {
             else {
                 player.take_weapon(card);
             }
-            // end if player dies or wins
         }
     }
 }

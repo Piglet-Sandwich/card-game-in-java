@@ -47,14 +47,18 @@ List where you use each concept in your program:
 - Loops (for, while):
     -while alive
 - Methods (with purpose):
+    -drawing cards
+    -shuffling
+    -managing player actions
 - Additional Unit 1-4 concept(s):
-    -
+    -classes
+    -arraylists
 
 --------------------------------------------------
 4) MATH LIBRARY USAGE (KEY REQUIREMENT)
 --------------------------------------------------
 Which Math library method(s) are you using? (examples: Math.random, Math.abs, Math.max, Math.min, Math.pow, etc.)
-
+Math.random, Math.max
 Where in the game is each method used?
 
 Why is Math usage important to your game logic?

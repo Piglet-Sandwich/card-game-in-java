@@ -46,6 +46,7 @@ public class Player {
             weapon_stack.add(monster);
         }
         if (health <= 0) {
+            System.out.println("You lost " + monster.value + " HP");
             return false;
         }
         System.out.println("You lost " + monster.value + " HP and now have " + health + "HP");
@@ -53,21 +54,31 @@ public class Player {
     }
 
     // Simply prints weapon stack
-    public void print_weapon_stack() {
-        System.out.println("Your current weapon is " + weapon_stack.getFirst());
-        System.out.print("You have fought the: ");
-        for (Card card : weapon_stack) {
-            if (card != weapon_stack.getFirst()) {
-                if (card == weapon_stack.getLast()) {
-                    if (weapon_stack.size() >= 3) {
-                        System.out.print("and " + card.value);
+    public StringBuilder print_weapon_stack() {
+        StringBuilder s = new StringBuilder();
+        if (weapon_stack.isEmpty()) {
+            s.append("No Weapon");
+        }
+        else {
+            s.append("Your current weapon is ").append(weapon_stack.getFirst());
+        }
+
+        if (weapon_stack.size() > 1) {
+            s.append("\nYou have fought the: ");
+            for (Card card : weapon_stack) {
+                if (card != weapon_stack.getFirst()) {
+                    if (card == weapon_stack.getLast()) {
+                        if (weapon_stack.size() >= 3) {
+                            s.append(" and ").append(card.value);
+                        } else {
+                            s.append(card.value);
+                        }
                     } else {
-                        System.out.print(card.value);
+                        s.append(card.value).append(", ");
                     }
-                } else {
-                    System.out.print(card.value + ", ");
                 }
             }
         }
+        return s;
     }
 }
