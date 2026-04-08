@@ -5,10 +5,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Deck deck = new Deck();
-        deck.build(1);
         deck.print();
 
-        //intro();
+        intro();
     }
 
     public static void intro() {
@@ -38,19 +37,23 @@ public class Main {
 
     public static void rules() {
         System.out.println("---Rules---");
+        System.out.println("Each turn there are four cards revealed");
+        System.out.println("You must perform an action on 3 of them");
+        System.out.println("The different suits mean different things:");
+        System.out.println(" -Hearts: Heal you the card value");
+        System.out.println(" -Diamonds: Is stored as a weapon thats card value is its value and replaces/clears any other weapon");
+        System.out.println(" -Spades / Clubs: these are monsters and they deal damage to you. You subtract the weapons value from the monsters.");
+        System.out.println(" Note: after fighting a monster with a weapon, you put the monster that weapon (or on the monster on the weapon if you fight multiple) and can only fight monsters with value less than the top monsters.");
     }
+    
     public static void play() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Welcome the Scoundrel\nEnter your name:  ");
+        System.out.print("Welcome the Scoundrel\nEnter your name:  ");
 
         // INIT
         Player player = new Player(sc.nextLine());
-        Deck weapon_deck = new Deck();
-        weapon_deck.build(2);
-        Deck enemy_deck = new Deck();
-        enemy_deck.build(1);
-        Deck pot_deck = new Deck();
-        pot_deck.build(3);
+        Deck deck = new Deck();
+        deck.build();
 
         //Game loop
         boolean running = true;
@@ -58,6 +61,7 @@ public class Main {
             System.out.println("==========\n"+player.name + "'s stats");
             System.out.println(" -Health: " + player.health);
             System.out.println("==========");
+
         }
     }
 }
