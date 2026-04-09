@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -16,8 +17,23 @@ public class Main {
             System.out.println("1. Play");
             System.out.println("2. Rules");
             System.out.println("3. Exit");
-            System.out.print("Enter your choice:  ");
-            int choice = sc.nextInt();
+            boolean invalid = true;
+            int choice = 1;
+            while (invalid) {
+                System.out.print("Enter your choice:  ");
+                try {
+                    choice = sc.nextInt();
+                    if (choice > 3 || choice <= 0) {
+                        System.out.println("Please enter a number in range");
+                    }
+                    else {
+                        invalid = false;
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Please enter a number");
+                    sc.nextLine();
+                }
+            }
             switch (choice) {
                 case 1:
                     play();
@@ -65,11 +81,13 @@ public class Main {
             }
             if (deck.deck.isEmpty()) {
                 System.out.println("YOU WIN");
-                break;
+                running = false;
+                intro();
+
             }
             System.out.println("=========="+player.name + "'s stats==========");
             System.out.println("-Health: " + player.health);
-            System.out.println("-Weapon Stack: " + player.weapon_stack);
+            System.out.println("-Weapon Stack: " + player.print_weapon_stack());
 
             // print them
             System.out.println("==========ROOM==========");
@@ -79,13 +97,32 @@ public class Main {
             System.out.println();
             // display option menu
             System.out.println("==========Choose a Card=========");
+            boolean invalid = true;
+            int choice = 1;
+            while (invalid) {
+                System.out.print("Enter your choice:  ");
+                try {
+                    choice = sc.nextInt();
+                    if (choice > 4 || choice <= 0) {
+                        System.out.println("Please enter a number in range");
+                    }
+                    else {
+                        invalid = false;
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Please enter a number");
+                    sc.nextLine();
+                }
+            }
             // let player choose
-            Card card = flipped.get(sc.nextInt()-1);
+            Card card = flipped.get(choice-1);
+            flipped.remove(choice-1);
             //do the effect
             if (card.suit.equals("Spades") || card.suit.equals("Clubs")) {
                 if (!player.fight(card)) {
                     System.out.println("You Died. There were " + deck.deck.size() + " cards left");
                     running = false;
+                    intro();
                 }
             }
             else if (card.suit.equals("Hearts")) {

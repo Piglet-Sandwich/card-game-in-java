@@ -38,19 +38,15 @@ public class Player {
         if (weapon_stack.isEmpty() || !can_fight(monster)) {
             System.out.println("You fought the " + monster.get());
             health -= monster.value;
-
+            System.out.println("You lost " + monster.value + " HP");
         }
         else {
             int life_lost = Math.max(monster.value - weapon_stack.getFirst().value, 0);
             health -= life_lost;
             weapon_stack.add(monster);
+            System.out.println("You lost " + life_lost + " HP");
         }
-        if (health <= 0) {
-            System.out.println("You lost " + monster.value + " HP");
-            return false;
-        }
-        System.out.println("You lost " + monster.value + " HP and now have " + health + "HP");
-        return true;
+        return health > 0;
     }
 
     // Simply prints weapon stack
@@ -60,7 +56,7 @@ public class Player {
             s.append("No Weapon");
         }
         else {
-            s.append("Your current weapon is ").append(weapon_stack.getFirst());
+            s.append("Your current weapon is ").append(weapon_stack.getFirst().get());
         }
 
         if (weapon_stack.size() > 1) {
