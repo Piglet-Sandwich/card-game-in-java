@@ -76,13 +76,12 @@ public class Main {
         while (running) {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             // flip cards till there are four
-            while (flipped.size() < 4 || deck.deck.isEmpty()) {
+            while (flipped.size() < 4 && !deck.deck.isEmpty()) {
                 flipped.add(deck.draw());
             }
-            if (deck.deck.isEmpty()) {
+            if (deck.deck.isEmpty() && flipped.isEmpty()) {
                 System.out.println("YOU WIN");
-                running = false;
-                intro();
+                break;
 
             }
             System.out.println("=========="+player.name + "'s stats==========");
@@ -92,7 +91,7 @@ public class Main {
             // print them
             System.out.println("==========ROOM==========");
             for (Card card : flipped) {
-                System.out.print("| " + (flipped.indexOf(card)+1) + ". " + card.get() + " |");
+                System.out.print("| (" + (flipped.indexOf(card)+1) + ") " + card.get() + " |");
             }
             System.out.println();
             // display option menu
@@ -121,8 +120,7 @@ public class Main {
             if (card.suit.equals("Spades") || card.suit.equals("Clubs")) {
                 if (!player.fight(card)) {
                     System.out.println("You Died. There were " + deck.deck.size() + " cards left");
-                    running = false;
-                    intro();
+                    break;
                 }
             }
             else if (card.suit.equals("Hearts")) {
